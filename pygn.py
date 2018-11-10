@@ -858,3 +858,4 @@ def _getMultiElemText(parentElem, elemName, topKey, bottomKey):
 			else:
 				result['0'] = {bottomKey:elem.attrib[bottomKey], 'TEXT':elem.text}
 	return result
+    

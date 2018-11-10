@@ -2,8 +2,8 @@ import os
 import subprocess
 from acrcloud.recognizer import ACRCloudRecognizer
 
-if os.path.isfile('environ.py'):
-    exec(open('./environ.py').read() )
+if os.path.isfile('../environ.py'):
+    exec(open('../environ.py').read() )
 
 config = {
         #Replace "xxxxxxxx" below with your project's host, access_key and access_secret.
