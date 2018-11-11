@@ -4,7 +4,7 @@ if os.path.isfile('environ.py'):
     exec(open('./environ.py').read())
    
 from songname import getMetadataFromFile
- 
+from songgenre.find_genre import find_genre
 # for each file in drobo: 
 #   read file into temporary storage
 #   get metadata from file
@@ -26,7 +26,10 @@ try:
         system_file_path = os.path.join('/tmp', f.split('/')[-1])
         print(system_file_path)
         ftp_client.get(f, system_file_path)
-        print(getMetadataFromFile(system_file_path))
+        x = getMetadataFromFile(system_file_path)
+        if x:
+            genre = find_genre(artist=x['artist'], track=x['track'])
+            print(genre)
         os.remove(system_file_path)
 
 finally:

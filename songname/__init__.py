@@ -23,8 +23,8 @@ def getMetadataFromFile(filename):
 
     if returned['status']['msg'] == "No result":
         return None
-    print(returned_orig)
-    return {'artist': returned['metadata']['music'][0]['external_metadata']['spotify']['artists'][0]['name'],
-            'track': returned['metadata']['music'][0]['external_metadata']['spotify']['track']['name']}
+    # print(returned_orig)
+    return {'artist': returned['metadata']['music'][0]['artists'][0]['name'],
+            'track': returned['metadata']['music'][0]['title']}
 
 

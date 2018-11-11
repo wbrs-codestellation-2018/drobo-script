@@ -1,4 +1,4 @@
-import pygn
+from . import pygn
 import os
 
 def find_genre(artist='', album='', track=''):
