@@ -12,7 +12,8 @@ from songgenre.find_genre import find_genre
 #   move song to genre folder
 
 BASE_PATH = '/mnt/DroboFS/Shares/Music/WBRS\ Automation'
-
+DEST_PATH = '/mnt/DroboFS/Shares/Music/Genres'
+cmd = "if [ ! -d %s ]; then mkdir %s; fi; cp %s %s"
 ssh = paramiko.SSHClient()
 # print(os.environ['ACR_HOST'])
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -29,7 +30,8 @@ try:
         x = getMetadataFromFile(system_file_path)
         if x:
             genre = find_genre(artist=x['artist'], track=x['track'])
-            print(genre)
+            ssh.exec_command("if")
+        else:
         os.remove(system_file_path)
 
 finally:
