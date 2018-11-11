@@ -11,7 +11,7 @@ from songgenre.find_genre import find_genre
 #   get genres from metadata
 #   move song to genre folder
 
-BASE_PATH = '/mnt/DroboFS/Shares/Music/WBRS\ Automation'
+BASE_PATH = '/mnt/DroboFS/Shares/Music/\'WBRS Automation\''
 DEST_PATH = '/mnt/DroboFS/Shares/Music/Genres'
 cmd = "if [ ! -d %s ]; then mkdir %s; fi; cp %s %s"
 ssh = paramiko.SSHClient()
@@ -30,11 +30,20 @@ try:
         x = getMetadataFromFile(system_file_path)
         if x:
             genre = find_genre(artist=x['artist'], track=x['track'])
-            ssh.exec_command("if")
+            genre_dir = "'%s'" % os.path.join(DEST_PATH, genre)
+            print(cmd % (genre_dir,genre_dir,f, genre_dir))
+            _, stdout, stder = ssh.exec_command(cmd % (genre_dir,genre_dir,"'%s'" % f, genre_dir))
+            print(stdout.readlines())
+            print(stderr.readlines())
         else:
+            genre_dir = "'%s'" % os.path.join(DEST_PATH, "unknown")
+            print(cmd % (genre_dir,genre_dir,f, genre_dir))
+            _, stdout, stderr = ssh.exec_command(cmd % (genre_dir,genre_dir,"'%s'" % f, genre_dir))
+            print(stdout.readlines())
+            print(stderr.readlines())
         os.remove(system_file_path)
 
 finally:
     ftp_client.close()
-
+print("CLOSING")
 ssh.close()
