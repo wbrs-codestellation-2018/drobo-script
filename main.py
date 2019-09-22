@@ -12,7 +12,7 @@ from songgenre.find_genre import find_genre
 #   move song to genre folder
 
 BASE_PATH = '/mnt/DroboFS/Shares/Music/\'WBRS Automation\''
-DEST_PATH = '/mnt/DroboFS/Shares/Music/Genres'
+DEST_PATH = '/mnt/DroboFS/Shares/Music/Genres2'
 cmd = "if [ ! -d %s ]; then mkdir %s; fi; cp %s %s"
 ssh = paramiko.SSHClient()
 # print(os.environ['ACR_HOST'])
