@@ -1,7 +1,7 @@
 import paramiko
 import os
-if os.path.isfile('environ.py'):
-    exec(open('./environ.py').read())
+from dotenv import load_dotenv
+load_dotenv()
    
 from songname import getMetadataFromFile
 from songgenre.find_genre import find_genre
