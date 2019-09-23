@@ -18,12 +18,13 @@ recognizer = ACRCloudRecognizer(config)
 # Artist
 # Track
 def getMetadataFromFile(filename):
+    print("METADATA FOR", filename)
     returned_orig = recognizer.recognize_by_file(filename, 0)
     returned = json.loads(returned_orig)
 
     if returned['status']['msg'] == "No result":
         return None
-    # print(returned_orig)
+    # print(returned_orig)s
     print (returned)
     return {'artist': returned['metadata']['music'][0]['artists'][0]['name'],
             'track': returned['metadata']['music'][0]['title']}
