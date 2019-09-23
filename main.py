@@ -22,8 +22,7 @@ cmd = "if [ ! -d %s ]; then mkdir %s; fi; cp %s %s"
 # _, stdout, _ = ssh.exec_command("find %s -name *.mp3" % BASE_PATH)
 # files = list(map(lambda x : x.strip(), stdout.readlines()))
 print("STARTING")
-stdout = subprocess.run(f'find {BASE_PATH} -name *.mp3', 
-            shell=True, stdout=subprocess.PIPE, text=True).stdout
+stdout = subprocess.run(f'find {BASE_PATH} -name *.mp3', shell=True, stdout=subprocess.PIPE, text=True).stdout
 files = list(map(lambda x : x.strip(), stdout.split("\n")))
 # print(files)
 try: 
@@ -59,4 +58,4 @@ except e:
     subprocess.run(f'echo "e" | sendmail binaryman00010@gmail.com -')
     # ftp_client.close()
 print("CLOSING")
-# ssh.close()
+# ssh.close()   
