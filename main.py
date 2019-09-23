@@ -54,8 +54,8 @@ try:
             # print(stderr.readlines())
         # os.remove(system_file_path)
     subprocess.run('echo "success" | sendmail binaryman00010@gmail.com -')
-except e:
-    subprocess.run(f'echo "e" | sendmail binaryman00010@gmail.com -')
+except Error as e:
+    subprocess.run(f'echo "{e}" | sendmail binaryman00010@gmail.com -')
     # ftp_client.close()
 print("CLOSING")
 # ssh.close()   
