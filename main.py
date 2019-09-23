@@ -60,7 +60,7 @@ try:
     print("COMPLETE")
 except Exception as e:
     subprocess.run(f'echo "{e}" | sendmail binaryman00010@gmail.com -', shell=True)
-    print("EXCEPTION", e)
+    print(e)
     # ftp_client.close()
 print("CLOSING")
 # ssh.close()   
