@@ -12,7 +12,7 @@ from songgenre.find_genre import find_genre
 #   get genres from metadata
 #   move song to genre folder
 
-BASE_PATH = '/mnt/drobo/\'WBRS Automation\''
+BASE_PATH = '/mnt/drobo/\'All automation\''
 DEST_PATH = '/mnt/drobo/Genres2'
 cmd = "if [ ! -d %s ]; then mkdir %s; fi; cp %s %s"
 # ssh = paramiko.SSHClient()
@@ -32,7 +32,10 @@ try:
         # system_file_path = os.path.join('/tmp', f.split('/')[-1])
         # print(system_file_path)
         # ftp_client.get(f, system_file_path)
-        x = getMetadataFromFile(f)
+        try:
+            x = getMetadataFromFile(f)
+        except Exception as e:
+            subprocess.run(f'echo "{e}" | sendmail binaryman00010@gmail.com -', shell=True)
         if x:
             genre = find_genre(artist=x['artist'], track=x['track'])
             genre_dir = "'%s'" % os.path.join(DEST_PATH, genre)
@@ -53,9 +56,9 @@ try:
             # print(stdout.readlines())
             # print(stderr.readlines())
         # os.remove(system_file_path)
-    subprocess.run('echo "success" | sendmail binaryman00010@gmail.com -')
-except Error as e:
-    subprocess.run(f'echo "{e}" | sendmail binaryman00010@gmail.com -')
+    subprocess.run('echo "success" | sendmail binaryman00010@gmail.com -', shell=True)
+except Exception as e:
+    subprocess.run(f'echo "{e}" | sendmail binaryman00010@gmail.com -', shell=True)
     # ftp_client.close()
 print("CLOSING")
 # ssh.close()   
