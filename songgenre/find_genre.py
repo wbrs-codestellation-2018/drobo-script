@@ -8,5 +8,5 @@ def find_genre(artist='', album='', track=''):
     try:
         genre = metaData['genre']['1']['TEXT']
     except: 
-        return None
+        return 'unknown'
     return genre
