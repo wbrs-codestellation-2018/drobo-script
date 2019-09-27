@@ -49,6 +49,7 @@ try:
             genre_dir = "'%s'" % os.path.join(DEST_PATH, genre)
             command = subprocess.run(cmd % (genre_dir,genre_dir,"'%s'" % f, genre_dir),
                                 shell=True, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            print("MOVED TO", genre_dir)
             print(command.stdout, command.stderr)
             # print(cmd % (genre_dir,genre_dir,f, genre_dir))
             # _, stdout, stder = ssh.exec_command(cmd % (genre_dir,genre_dir,"'%s'" % f, genre_dir))
@@ -56,6 +57,7 @@ try:
             # print(stderr.readlines())
         else:
             genre_dir = "'%s'" % os.path.join(DEST_PATH, "unknown")
+            print("MOVED TO", genre_dir)
             command = subprocess.run(cmd % (genre_dir,genre_dir,"'%s'" % f, genre_dir),
                                 shell=True, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             print(command.stdout, command.stderr)
