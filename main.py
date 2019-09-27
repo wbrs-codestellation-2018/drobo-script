@@ -12,6 +12,12 @@ from songgenre.find_genre import find_genre
 #   get genres from metadata
 #   move song to genre folder
 
+manifest = {}
+with open('manifest.csv', 'r') as f:
+    for line in f:
+        print(line)
+        path,status = line.split(':')
+        manifest[path] = int(status)
 BASE_PATH = '/mnt/drobo/\'All automation\''
 DEST_PATH = '/mnt/drobo/Genres2'
 cmd = "if [ ! -d %s ]; then mkdir %s; fi; cp %s %s"
@@ -22,16 +28,18 @@ cmd = "if [ ! -d %s ]; then mkdir %s; fi; cp %s %s"
 # _, stdout, _ = ssh.exec_command("find %s -name *.mp3" % BASE_PATH)
 # files = list(map(lambda x : x.strip(), stdout.readlines()))
 print("STARTING")
-stdout = subprocess.run(f'find {BASE_PATH} -name *.mp3', shell=True, stdout=subprocess.PIPE, text=True).stdout
-files = list(map(lambda x : x.strip(), stdout.split("\n")))
+# stdout = subprocess.run(f'find {BASE_PATH} -name *.mp3', shell=True, stdout=subprocess.PIPE, text=True).stdout
+# files = map(lambda x : x.strip(), stdout.split("\n"))
 # print(files)
 try: 
     # ftp_client=ssh.open_sftp()
-    for f in files:
+    for f in manifest:
         print("PROCESSING", f)
         # system_file_path = os.path.join('/tmp', f.split('/')[-1])
         # print(system_file_path)
         # ftp_client.get(f, system_file_path)
+        if manifest[f] == 1:
+            continue
         try:
             x = getMetadataFromFile(f)
         except Exception as e:
@@ -55,6 +63,7 @@ try:
             # _, stdout, stderr = ssh.exec_command(cmd % (genre_dir,genre_dir,"'%s'" % f, genre_dir))
             # print(stdout.readlines())
             # print(stderr.readlines())
+        manifest[f] = 1
         # os.remove(system_file_path)
     subprocess.run('echo "success" | sendmail binaryman00010@gmail.com -', shell=True)
     print("COMPLETE")
@@ -62,5 +71,9 @@ except Exception as e:
     subprocess.run(f'echo "{e}" | sendmail binaryman00010@gmail.com -', shell=True)
     print(e)
     # ftp_client.close()
+finally:
+    with open('manifest.csv', 'w') as f:
+        for x in manifest:
+            f.write(f'{f}:{manifest[f]}')
 print("CLOSING")
 # ssh.close()   
