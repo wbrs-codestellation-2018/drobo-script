@@ -45,6 +45,7 @@ try:
             x = getMetadataFromFile(f)
         except Exception as e:
             subprocess.run(f'echo "{e}" | sendmail binaryman00010@gmail.com -', shell=True)
+            x = None
         if x:
             genre = find_genre(artist=x['artist'], track=x['track'])
             genre_dir = "'%s'" % os.path.join(DEST_PATH, genre)
