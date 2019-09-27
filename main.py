@@ -78,6 +78,6 @@ finally:
     shutil.copyfile('manifest.csv', 'manifest.csv.bak')
     with open('manifest.csv', 'w') as f:
         for x in manifest:
-            f.write(f'{x}:{manifest[x]}')
+            f.write(f'{x}:{manifest[x]}\n')
 print("CLOSING")
 # ssh.close()   
