@@ -2,6 +2,7 @@
 import os
 import subprocess
 from dotenv import load_dotenv
+import shutil
 load_dotenv()
    
 from songname import getMetadataFromFile
@@ -16,7 +17,7 @@ manifest = {}
 with open('manifest.csv', 'r') as f:
     for line in f:
         print(line)
-        path,status = line.split(':')
+        path, status = line.split(':')
         manifest[path] = int(status)
 BASE_PATH = '/mnt/drobo/\'All automation\''
 DEST_PATH = '/mnt/drobo/Genres2'
@@ -74,8 +75,9 @@ except Exception as e:
     print(e)
     # ftp_client.close()
 finally:
+    shutil.copyfile('manifest.csv', 'manifest.csv.bak')
     with open('manifest.csv', 'w') as f:
         for x in manifest:
-            f.write(f'{f}:{manifest[f]}')
+            f.write(f'{x}:{manifest[x]}')
 print("CLOSING")
 # ssh.close()   
